@@ -1,9 +1,9 @@
 const axios = require('axios');
-const { URL } = require('url');
 
 let api_ix_status = {
 
     regex_name : /.*\.(?<name>resi\d*-\d*)\..*/,
+    data : "",
 
     fetchStatuses: async function() {
         let result = {};
@@ -15,12 +15,10 @@ let api_ix_status = {
             let url = `https://repo-1.resilienztest.resi00-${i}.elo.cloud/repo-1/ix?cmd=status&mode=text`;
             let promise = axios.get(url)
                 .then(response => {
-                    let data = this._convertToObj(response)
-                    result[`${i}`] = data;
+                    result[`${i}`] = this._convertToObj(response);
                 })
                 .catch(error => {
-                    let data = this._convertErrorToObj(error);
-                    result[`${i}`] = data;
+                    result[`${i}`] = this._convertErrorToObj(error);
                 });
             promises.push(promise);
         }
@@ -28,7 +26,7 @@ let api_ix_status = {
         // Warten, bis alle Promises aufgelöst sind
         await Promise.all(promises);
 
-        return this._sortObjectByKey(result);
+        this.data = this._sortObjectByKey(result);
     },
 
     _convertErrorToObj : function(_error){
