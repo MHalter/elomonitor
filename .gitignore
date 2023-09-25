@@ -1,0 +1,43 @@
+# Node.js-Abhängigkeiten
+/node_modules/
+
+# Umgebungsvariablen
+.env
+
+# Logs
+*.log
+
+# Runtime-Daten
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# Verzeichnis für den Debugger
+.vscode/
+.idea/
+
+# OS-Dateien
+.DS_Store
+Thumbs.db
+
+# Andere Dateien und Verzeichnisse, die ignoriert werden sollten
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Build-Verzeichnis
+/dist/
+
+# Temporäre Dateien
+*.tmp
+*.temp
+*.swp
+*.swo
+*.bak
+
+# Optional: Wenn Sie ein Frontend-Framework wie React oder Vue.js verwenden
+/build/
+
+
+/bin/

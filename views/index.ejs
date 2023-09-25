@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JSON Daten Aktualisierung</title>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <link rel="stylesheet" href="/stylesheets/style.css">
+</head>
+<body>
+<table>
+  <thead>
+  <tr>
+    <th>Name</th>
+    <th>IX Status</th>
+  </tr>
+  </thead>
+  <tbody id="dataContainer">
+  <!-- data -->
+  </tbody>
+</table>
+
+<div style="margin-top: 30px;"></div> <!-- Abstand zwischen den Tabellen -->
+
+<table id="detailsTable" style="display:none;">
+  <thead>
+  <tr>
+    <th colspan="2">Details</th>
+  </tr>
+  </thead>
+  <tbody id="details"></tbody>
+</table>
+
+<script>
+  function fetchData() {
+    $.get('/api', (data) => {
+      let content = '';
+      for (let key in data) {
+        let colorClass = (data[key].httpstatus === 200 && data[key].ixstatus === "RUNNING") ? 'green' : 'red';
+        content += `<tr class="${colorClass}" data-id="${key}">
+                        <td><a href="#" class="server-link">${data[key].name}</a></td>
+                        <td>${data[key].ixstatus || '-'}</td>
+                    </tr>`;
+      }
+      $('#dataContainer').html(content);
+
+      $('.server-link').on('click', function(e) {
+        e.preventDefault();
+        const serverId = $(this).parent().parent().attr('data-id');
+        const serverData = data[serverId];
+        const detailsHtml = `
+          <tr><td><strong>Name</strong></td><td>${serverData.name}</td></tr>
+          <tr><td><strong>Host</strong></td><td>${serverData.host}</td></tr>
+          <tr><td><strong>Version</strong></td><td>${serverData.version}</td></tr>
+          <tr><td><strong>Current Time</strong></td><td>${serverData.current_time}</td></tr>
+          <!-- Add any other details you want here -->
+        `;
+        $('#details').html(detailsHtml);
+        $('#detailsTable').show();
+      });
+    });
+  }
+
+  fetchData(); // Bei erstem Laden aufrufen
+  setInterval(fetchData, 30000); // Alle 30 Sekunden aufrufen
+</script>
+</body>
+</html>

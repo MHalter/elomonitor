@@ -1,0 +1,38 @@
+body {
+  padding: 50px;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  background-color: #f3f4f6;
+}
+
+a {
+  color: #00B7FF;
+}
+
+table {
+  border-collapse: collapse;
+  width: 50%;
+  margin: auto;
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
+}
+
+th, td {
+  padding: 10px 15px;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+th {
+  background-color: #555;
+  color: #fff;
+}
+
+tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.green {
+  color: green;
+}
+
+.red {
+  color: red;
+}
